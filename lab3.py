@@ -14,19 +14,19 @@ def MonK(list,k):
             list[i][j] = int(list[i][j])*k
     return list
 def MonM(list1,list2):
-    res = [[0 for x in range(len(list1))]for x in range(len(list2))]
+    res = [[0 for x in range(len(list1))] for y in range(len(list2))]
     for i in range(len(list1)):
-        for j in range(len(list1)):
-            res[i][j] = list1[i][j] * list2[j][i]
+        for j in range(len(list2[0])):
+            for k in range(len(list2)):
+                res[i][j] += list1[i][k] * list2[k][j]
     return res
+
 def transpose(list):
-    g = 0
-    for i in range(len(list)-1):
-        for j in range(len(list)-1):
-            g = list[i][j]
-            list[i][j] = list[j][i]
-            list[j][i] = g
-    return list
+    res = [[0 for j in range(len(list))]for i in range(len(list))]
+    for i in range(len(list)):
+        for j in range(len(list)):
+            res[j][i] = list[i][j]
+    return res
 def MminusM(list1,list2):
     res = [[0 for x in range(len(list1))]for x in range(len(list1))]
     for i in range(len(list1)):
@@ -50,7 +50,7 @@ print('Выберете вариант заполнения(0 - ручное з�
 choise = input()
 if choise == '0':
     #до выбора ручного заполнения измените число в коде заполнения nums
-    nums = [0 for x in range(n*n)]
+    nums = [1 for x in range(n*n)]
 else:
     nums = [random.randint(-10,10) for x in range(n*n)]
 for i in nums:
@@ -117,24 +117,30 @@ printout(D)
 print('Построенная матрица C:')
 printout(C)
 s1 = 0
-s2 = 0
+s2 = 1
 v = 0
 #if len(C)%2 != 0:
-for c in range(int(len(C)/2)):
+for c in range(int(len(C)/2)+1):
     for i in range(0+c,len(C)-c):
         if c == 0:
-            for j in range(len(C)-c,len(C)+1):
-                if j%2 !=0:
-                    s1 += C[i][j-1]
-        for j in range (len(C)-c,len(C)):
-            if j%2 !=0:
-                s1 += C[i][j]
+            for j in range(len(C)-1,len(C)):
+                if j%2 == 0:
+                    s1+=C[i][j]
+        else:
+            for j in range(len(C)-c-1,len(C)-c):
+                if j%2 == 0:
+                    s1+=C[i][j]
 
-for i in range(int(len(C)/2)+1):
-    for c in range(i,i+1):
-        for j in range(0+c,len(C)-c):
-            if (i+1)%2 == 0:
-                s2+=C[i][j]
+for c in range(int(len(C)/2)+1):
+    for j in range(0+c,len(C)-c):
+        if c == 0:
+            for i in range(-(len(C)),-(len(C))+1):
+                if (i*-1)%2 == 0 and i != 0:
+                    s2 *= C[i][j]
+        else:
+            for i in range(-(len(C))+c,-(len(C))+c+1):
+                if i%2 == 0 and i != 0:
+                    s2 *= C[i][j]
 if s1 > s2:
     for i in range(int(len(C)/2)+1):
         for j in range(int(len(C)/2)+i):
