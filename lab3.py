@@ -8,7 +8,7 @@
 def MonK(list,k):
     for i in range(len(list)):
         for j in range(len(list)):
-            list[i][j] = list[i][j]*k
+            list[i][j] = int(list[i][j])*k
     return list
 def MonM(list1,list2):
     res = [[0 for x in range(len(list1))]for x in range(len(list2))]
@@ -114,20 +114,27 @@ v = 0
 #if len(C)%2 != 0:
 for c in range(int(len(C)/2)):
     for i in range(0+c,len(C)-c):
+        if c == 0:
+            for j in range(len(C)-c,len(C)+1):
+                if j%2 !=0:
+                    s1 += C[i][j-1]
         for j in range (len(C)-c,len(C)):
             if j%2 !=0:
                 s1 += C[i][j]
-for c in range(int(len(C)/2)):
-    for i in range(len(C)-c,len(C)):
+
+for i in range(int(len(C)/2)+1):
+    for c in range(i,i+1):
         for j in range(0+c,len(C)-c):
-            if i%2 == 0:
+            if (i+1)%2 == 0:
                 s2+=C[i][j]
 if s1 > s2:
-    for i in range(int(len(C)/2)):
-        for j in range(int(len(C)/2)):
-            v = C[i][len(C)-j]
-            C[i][len(C)-j] = C[len(C)-j][i]
-            C[len(C)-j][i] = v
+    for i in range(int(len(C)/2)+1):
+        for j in range(int(len(C)/2)+i):
+            v = C[i][len(C)-j-1]
+            C[i][len(C)-j-1] = C[len(C)-j-1][i]
+            C[len(C)-j-1][i] = v
+    print('Матрица C после вычислений:')
+    printout(C)
     F = [[0 for x in range(n)]for x in range(n)]
     if n % 2 == 0:
         for i in range(int(n/2)):
@@ -143,60 +150,37 @@ if s1 > s2:
             for j in range(int(n/2),n):
                 F[i][j] = C[i-int(n/2)][j-int(n/2)]
     else:
-        for i in range(int(n/2)):
-            for j in range(int(n/2)):
-                F[i][j] = E[i][j]
-        for i in range(int(n/2)):
-            for j in range(int(n/2)+1,n):
-                F[i][j] = B[i][j-int(n/2)+1]
-        for i in range(int(n/2)+1,n):
-            for j in range(int(n/2)):
-                F[i][j] = D[i-int(n/2+1)][j]
+        F = [[0 for x in range(n)]for x in range(n)]
+        for i in range(n):
+            for j in range(n):
+                F[i][j] = A[i][j]
         for i in range(int(n/2)+1,n):
             for j in range(int(n/2)+1,n):
-                F[i][j] = C[i-int(n/2)+1][j-int(n/2)+1]
+                F[i][j] = C[i-int(n/2)-1][j-int(n/2)-1]
     print('Построенная матрица F:')
     printout(F)
 else:
     F = [[0 for x in range(n)]for x in range(n)]
+    for i in range(n):
+        for j in range(n):
+            F[i][j] = A[i][j]
     if n % 2 == 0:
         for i in range(int(n/2)):
             for j in range(int(n/2)):
-                F[i][j] = E[i][j]
-        for i in range(int(n/2)):
-            for j in range(int(n/2),n):
-                F[i][j] = B[i][j-int(n/2)]
-        for i in range(int(n/2),n):
-            for j in range(int(n/2)):
-                F[i][j] = D[i-int(n/2)][j]
-        for i in range(int(n/2),n):
-            for j in range(int(n/2),n):
-                F[i][j] = C[i-int(n/2)][j-int(n/2)]
-        for i in range(int(n/2)):
-            for j in range(int(n/2)):
+                v = F[i][j]
                 F[i][j] = F[i][j+int(n/2)]
+                F[i][j+int(n/2)] = v
     else:
         for i in range(int(n/2)):
             for j in range(int(n/2)):
-                F[i][j] = E[i][j]
-        for i in range(int(n/2)):
-            for j in range(int(n/2)+1,n):
-                F[i][j] = B[i][j-int(n/2)+1]
-        for i in range(int(n/2)+1,n):
-            for j in range(int(n/2)):
-                F[i][j] = D[i-int(n/2+1)][j]
-        for i in range(int(n/2)+1,n):
-            for j in range(int(n/2)+1,n):
-                F[i][j] = C[i-int(n/2)+1][j-int(n/2)+1]
-        for i in range(int(n/2)):
-            for j in range(int(n/2)):
+                v = F[i][j]
                 F[i][j] = F[i][j+int(n/2)+1]
+                F[i][j+int(n/2)+1] = v
     print('Построенная матрица F:')
     printout(F)
 r = MminusM(MonM(MonK(A,k),A),MonK(transpose(A),k))
 print('Результат вычислений:')
 printout(r)
-
 
 
 
