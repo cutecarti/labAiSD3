@@ -142,7 +142,7 @@ for c in range(int(len(C)/2)+1):
                 if i%2 == 0 and i != 0:
                     s2 *= C[i][j]
 print('Сумма  в нечетных столбцах области 2 матрицы C:', s1)
-print('Сумма  в четных строках области 1 матрицы C:', s2)
+print('Произведение в четных строках области 1 матрицы C:', s2)
 if s1 > s2:
     for i in range(int(len(C)/2)+1):
         for j in range(int(len(C)/2)+i):
