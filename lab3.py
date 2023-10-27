@@ -40,18 +40,33 @@ def printout(list):
         print('',end='\n')
 
 print('Введите число K:')
-k = int(input())
-print('Введите число N')
-n = int(input())
+k = input()
+while not k.isdigit():
+    print("Некорректное значение, введите ЧИСЛО K")
+    k = input()
+print('Введите число N - ребро матрицы A')
+n = input()
+while not n.isdigit():
+    print("Некорректное значение, введите ЧИСЛО N")
+    n = input()
 A = []
 crutch = []
 s = 0
 print('Выберете вариант заполнения(0 - ручное заполнение. 1 - случайное заполнение)')
 choise = input()
+while True:
+    if choise == '0':
+        break
+    if choise == '1':
+        break
+    print("Неверный вариант ответа, выберете вариант заполнения(0 - ручное заполнение. 1 - случайное заполнение)")
+    choise = input()
+k = int(k)
+n = int(n)
 if choise == '0':
     #до выбора ручного заполнения измените число в коде заполнения nums
     nums = [1 for x in range(n*n)]
-else:
+elif choise == '1':
     nums = [random.randint(-10,10) for x in range(n*n)]
 for i in nums:
     crutch.append(i)
@@ -117,7 +132,7 @@ printout(D)
 print('Построенная матрица C:')
 printout(C)
 s1 = 0
-s2 = 1
+s2 = 0
 v = 0
 #if len(C)%2 != 0:
 for c in range(int(len(C)/2)+1):
@@ -141,8 +156,6 @@ for c in range(int(len(C)/2)+1):
             for i in range(-(len(C))+c,-(len(C))+c+1):
                 if i%2 == 0 and i != 0:
                     s2 *= C[i][j]
-print('Сумма  в нечетных столбцах области 2 матрицы C:', s1)
-print('Произведение в четных строках области 1 матрицы C:', s2)
 if s1 > s2:
     for i in range(int(len(C)/2)+1):
         for j in range(int(len(C)/2)+i):
@@ -197,7 +210,6 @@ else:
 r = MminusM(MonM(MonK(A,k),A),MonK(transpose(A),k))
 print('Результат вычислений:')
 printout(r)
-
 
 
 
